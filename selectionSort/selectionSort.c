@@ -8,9 +8,13 @@
 void selection_sort(int *v, int n){
 	int i, j, min, tmp;
 
+	#pragma omp parallel private(i, j, min, tmp) 
+	{
+	
 	for(i = 0; i < n - 1; i++){
 		min = i;
-
+		
+		#pragma omp for
 		for(j = i + 1; j < n; j++)
 			if(v[j] < v[min])
 				min = j;
@@ -18,6 +22,8 @@ void selection_sort(int *v, int n){
 		tmp = v[i];
 		v[i] = v[min];
 		v[min] = tmp;
+	}
+	
 	}
 }
 
